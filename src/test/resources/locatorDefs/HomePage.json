@@ -1,0 +1,11 @@
+{
+  "moreButton": {
+    "xpath": "//a[@id='h_sub_menu']",
+    "name": "More image in Home Page"
+  },
+  "weather": {
+    "xpath": "//a[contains(text(),'WEATHER')]",
+    "name": "Weather link"
+  }
+
+}

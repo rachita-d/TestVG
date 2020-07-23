@@ -1,0 +1,12 @@
+*.pyc
+.classpath
+bin
+.project
+.settings
+target/**
+test-output/**
+log/**
+.idea/**
+*.pyc
+*.iml
+.settings/**

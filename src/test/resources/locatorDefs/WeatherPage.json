@@ -1,0 +1,22 @@
+{
+  "searchBox": {
+  "xpath": "//input[@id='searchBox']",
+  "name": "Pin City Search box"
+},
+  "cityCheckbox": {
+    "xpath": "//div[@class='message']//label//input[@id='{xpathInput1}']",
+    "name": "checkbox"
+  },
+  "CityWeatherBar":{
+    "xpath": "//div[@title='{xpathInput1}']//div//span[@class='tempRedText']",
+    "name": "The temperature bar over the city"
+  },
+  "cityOnMap": {
+    "xpath": "//div[contains(text(),'{xpathInput1}')]",
+    "name": "City on the Map"
+  },
+  "cityTempInfo": {
+    "xpath": "//div[@class='leaflet-popup-content-wrapper']//div//div//div//span[contains(text(),'{xpathInput1}')]",
+    "name": "Temperature info of the City"
+  }
+}
