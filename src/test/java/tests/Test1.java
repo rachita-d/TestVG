@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import framework.RestBase;
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
 
 import java.io.IOException;
 
@@ -18,7 +17,7 @@ public class Test1 extends BaseTest {
     public String city="Hubli";
     public String district="Dharwad";
 
-   // @Test(priority = 1)
+    @Test(priority = 1)
     public void GetWeatherFromNDTV() throws IOException {
 
         super.initTest();
