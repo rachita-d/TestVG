@@ -25,6 +25,10 @@ public class BaseTest extends BaseClass{
     private OperationsBundle operationsBundle;
     List<WebDriver> activeDrivers = new ArrayList<>();
 
+    /**
+     * This method is to open the driver instance with the URL
+     * @throws IOException
+     */
     public void initDriver() throws IOException {
 
         fileInputStream=new FileInputStream("./src/test/java/framework/Global.properties");
@@ -39,6 +43,11 @@ public class BaseTest extends BaseClass{
         activeDrivers.add(driver);
     }
 
+    /**
+     * To initialise the driver
+     * @param browser
+     * @return
+     */
     public WebDriver newDriver(String browser){
         WebDriver driver = null;
         if(browser.equalsIgnoreCase("firefox"))
@@ -58,6 +67,10 @@ public class BaseTest extends BaseClass{
 
     }
 
+    /**
+     * Test initialisation , sets driver and browser
+     * @throws IOException
+     */
     public void initTest()throws IOException{
         info(threadId()+":initTest:setOperationsBundle");
         setOperationsBundle(new OperationsBundle());
@@ -74,6 +87,9 @@ public class BaseTest extends BaseClass{
         return this.operationsBundle;
     }
 
+    /**
+     * Driver quit method
+     */
     public void closeBrowser(){
 
        try{

@@ -18,5 +18,13 @@
   "cityTempInfo": {
     "xpath": "//div[@class='leaflet-popup-content-wrapper']//div//div//div//span[contains(text(),'{xpathInput1}')]",
     "name": "Temperature info of the City"
+  },
+  "tempInDeg": {
+    "xpath": "//div[@title='{xpathInput1}']//div[@class='temperatureContainer']//span[@class='tempRedText']",
+    "name": "teamp in degrees"
+  },
+  "tempInFahrenheit": {
+    "xpath": "//div[@title='{xpathInput1}']//div[@class='temperatureContainer']//span[@class='tempRedText']",
+    "name": "teamp in Fahrenheit"
   }
 }

@@ -20,6 +20,10 @@ public class BasePage extends BaseClass{
         captureScreenshot();
     }
 
+    /**
+     * Load json
+     * @param jsonPath
+     */
     protected void loadJson(String jsonPath){
         InputStream inputStream = null;
         ClassLoader classLoader = getClass().getClassLoader();
@@ -40,6 +44,12 @@ public class BasePage extends BaseClass{
         return this.jsonMap;
     }
 
+    /**
+     * Method to get the locator ID from the json
+     * @param locatorKey - locator key in Json
+     * @param idType - id type, here xpath
+     * @return
+     */
     protected String getLocatorId(String locatorKey, String idType) {
         Object locatorObject = ((HashMap) getJsonMap().get(locatorKey)).get(idType);
         String locatorId = null;
@@ -55,9 +65,19 @@ public class BasePage extends BaseClass{
         return locatorId;
     }
 
+    /**
+     * Get element
+     * @param locator
+     * @return
+     */
     protected WebElement getElement(String locator){
         return getOperationsBundle().getDriver().findElement(By.xpath(locator));
     }
+
+    /**
+     * Method to click on Element
+     * @param element
+     */
     protected void clickElement(WebElement element) {
         if (element.isDisplayed()) {
             element.click();
@@ -106,10 +126,10 @@ public class BasePage extends BaseClass{
      * @param xpathKey--Key of an element in json
      * @param runtimeValue--Inputs need to place in runtime xpath
      * @usage In json provide runtime xpaths by replacing input parameters with syntax and exact sequence as in runtime xpath like {xpathInput1}, {xpathInput2} and so.
-     *        Runtime xpath is "//a[contains(@id,'TroubleTicket1_c_TroubleTicketName_c1:lov_i1::lovIconId')]".
-     *        In this "TroubleTicket1" and "TroubleTicketName" are dynamic values/inputs.
-     *        In json replace these inputs params with {xpathInput1} and {xpathInput2}. So in json it will become "//a[contains(@id,'{xpathInput1}_c_{xpathInput2}_c1:lov_i1::lovIconId')]".
-     *        While parameters to pass this method would be xpathKey,"TroubleTicket1" and "TroubleTicketName"
+     *        Runtime xpath is "//a[contains(@id,'randomID1_somethingInBetween_randomID2')]".
+     *        In this "randomID1" and "randomID2" are dynamic values/inputs.
+     *        In json replace these inputs params with {xpathInput1} and {xpathInput2}. So in json it will become "//a[contains(@id,'{xpathInput1}_somethingInBetween_{xpathInput2}')]".
+     *        While parameters to pass this method would be xpathKey,"randomID1" and "randomID2"
      */
     protected void clickElementByRuntimeXpath(String xpathKey, String ...runtimeValue){
         int index=1;
@@ -124,6 +144,12 @@ public class BasePage extends BaseClass{
         info("Element with run time xpath " + " : " + xpathTemplate + " is clicked");
     }
 
+    /**
+     * Check if element exists via xpath
+     * @param xpathKey--Key of an element in json
+     * @param runtimeValue--Inputs need to place in runtime xpath
+     * @return
+     */
     protected Boolean isElementExistsByRuntimeXpath(String xpathKey, String ...runtimeValue){
         int index=1;
         String xpathTemplate = getXpath(xpathKey);
@@ -136,6 +162,25 @@ public class BasePage extends BaseClass{
         debug("Found total DOM elements for xpath : " + xpathTemplate + " ="+count);
         Boolean result= count > 0;
         return result;
+    }
+
+    /**
+     * Method to get the Element text with variable xpath
+     * @param xpathKey
+     * @param runtimeValue
+     * @return
+     */
+    protected String getElementTextByRuntimeInput(String xpathKey, String ...runtimeValue){
+
+        int index=1;
+        String xpathTemplate = getXpath(xpathKey);
+        info("Xpath from json is:"+xpathTemplate);
+        for(String value:runtimeValue){
+            xpathTemplate=xpathTemplate.replace("{xpathInput"+index+"}", value);
+            index++;
+        }
+        info("xpath to click is: " + xpathTemplate);
+        return getDriver().findElement(By.xpath(xpathTemplate)).getText();
     }
 
 }

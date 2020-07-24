@@ -1,8 +1,6 @@
 package framework;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
@@ -23,9 +21,14 @@ public class RestBase extends BaseClass{
     public static String API_Key;
 
 
-    protected ObjectMapper jsonMap =null;
+    protected HashMap jsonMap ;
 
 
+    /**
+     * method to create Request Specification. The Base URL is set from the properties file
+     * @return
+     * @throws IOException
+     */
     public RequestSpecification createRequestSpecification()throws IOException {
 
         fileInputStream=new FileInputStream("./src/test/java/framework/Global.properties");
@@ -40,14 +43,11 @@ public class RestBase extends BaseClass{
         return requestSpec;
     }
 
-    public void createResponseSpecification() {
-
-        responseSpec = new ResponseSpecBuilder().
-                expectStatusCode(200).
-                expectContentType(ContentType.JSON).
-                build();
-    }
-
+    /**
+     * Method to get the API_key from properties file.
+     * @return
+     * @throws IOException
+     */
     public String getAPI_Key()throws IOException{
         fileInputStream=new FileInputStream("./src/test/java/framework/Global.properties");
         properties=new Properties();
@@ -62,13 +62,31 @@ public class RestBase extends BaseClass{
      * @return
      */
     protected InputStream getPayload(String jsonPath){
-        InputStream inputStream = null;
+        InputStream inputStream ;
         ClassLoader classLoader = getClass().getClassLoader();
         inputStream = classLoader.getResourceAsStream(jsonPath);
         if (inputStream!=null)
         return inputStream;
         else return null;
     }
+
+    /**
+     * Method to get object value from API response
+     * @param jsonResponse - response of the API request in json format
+     * @param jsonKey - The Json Key
+     * @param jsonValue - Value mapped
+     * @return
+     * @throws IOException
+     */
+
+    public Object getLocatorId(InputStream  jsonResponse ,String jsonKey, String jsonValue) throws IOException{
+
+        Object locatorId;
+        jsonMap = new ObjectMapper().readValue(jsonResponse,HashMap.class);
+        locatorId=((HashMap)jsonMap.get(jsonKey)).get(jsonValue);
+        return locatorId;
+    }
+
 
 
 
